@@ -28,6 +28,9 @@ public abstract class GAction : MonoBehaviour
         _effectsDict = new Dictionary<string, int>();
     }
 
+    public float Cost { get { return _cost; } }
+    public Dictionary<string, int> Effects { get { return _effectsDict; } }
+
     private void Awake()
     {
         _navAgent = GetComponent<NavMeshAgent>();

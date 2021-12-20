@@ -6,13 +6,13 @@ using System.Linq;
 
 public class SubGoal
 {
-    public Dictionary<string, int> goals;
-    public bool remove;
+    private Dictionary<string, int> _goals;
+    private bool _remove;
 
     public SubGoal(string key, int value, bool remove)
     {
-        goals = new Dictionary<string, int> {{key, value}};
-        this.remove = remove;
+        _goals = new Dictionary<string, int> {{key, value}};
+        _remove = remove;
     }
 }
 

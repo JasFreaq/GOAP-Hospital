@@ -28,7 +28,7 @@ public class WorldStateHandler
         _worldStatesDict = new Dictionary<string, int>();
     }
 
-    public IReadOnlyDictionary<string, int> WorldStates
+    public Dictionary<string, int> WorldStates
     {
         get { return _worldStatesDict; }
     }
