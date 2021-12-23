@@ -9,13 +9,13 @@ public abstract class GAction : MonoBehaviour
     [SerializeField] private string _actionName = "Action";
     [SerializeField] private float _cost = 1.0f;
     [SerializeField] private float _duration;
-    [SerializeField] private Transform _target;
     [SerializeField] private string _targetTag;
     [SerializeField] private WorldState[] _preconditions;
     [SerializeField] private WorldState[] _effects;
 
     private NavMeshAgent _navAgent;
 
+    protected Transform _target;
     private Dictionary<string, int> _preconditionsDict;
     private Dictionary<string, int> _effectsDict;
     private WorldStateHandler _agentBeliefs;
@@ -29,8 +29,12 @@ public abstract class GAction : MonoBehaviour
         _effectsDict = new Dictionary<string, int>();
     }
 
+    public string ActionName { get { return _actionName; } }
+
     public float Cost { get { return _cost; } }
     
+    public Dictionary<string, int> Preconditions { get { return _preconditionsDict; } }
+
     public Dictionary<string, int> Effects { get { return _effectsDict; } }
     
     public bool IsRunning { get { return _isRunning; } }
@@ -79,7 +83,8 @@ public abstract class GAction : MonoBehaviour
             if (_targetTag != "")
                 _target = GameObject.FindGameObjectWithTag(_targetTag).transform;
         }
-        else
+
+        if (_target != null) 
         {
             if (!_isRunning)
             {

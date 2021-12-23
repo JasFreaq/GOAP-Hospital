@@ -32,6 +32,12 @@ public class GAgent : MonoBehaviour
 
     private bool _invokedAction;
 
+    public IReadOnlyList<GAction> Actions { get { return _actions; } }
+
+    public Dictionary<SubGoal, int> Goals { get { return _goals; } }
+
+    public GAction CurrentAction { get { return _currentAction; } }
+
     private void Awake()
     {
         GAction[] actions = GetComponents<GAction>();
