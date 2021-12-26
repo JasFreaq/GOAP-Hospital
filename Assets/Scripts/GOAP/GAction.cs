@@ -10,15 +10,17 @@ public abstract class GAction : MonoBehaviour
     [SerializeField] private float _cost = 1.0f;
     [SerializeField] private float _duration;
     [SerializeField] private string _targetTag;
-    [SerializeField] private WorldState[] _preconditions;
-    [SerializeField] private WorldState[] _effects;
+    [SerializeField] private State[] _preconditions;
+    [SerializeField] private State[] _effects;
 
     private NavMeshAgent _navAgent;
 
     protected Transform _target;
+    protected GInventory _agentInventory;
+    protected StateHandler _agentBeliefs;
+    
     private Dictionary<string, int> _preconditionsDict;
     private Dictionary<string, int> _effectsDict;
-    private WorldStateHandler _agentBeliefs;
 
     private bool _isRunning;
     private bool _invokedComplete;
@@ -39,19 +41,23 @@ public abstract class GAction : MonoBehaviour
     
     public bool IsRunning { get { return _isRunning; } }
 
+    public GInventory Inventory { set { _agentInventory = value; } }
+
+    public StateHandler Beliefs { set { _agentBeliefs = value; } }
+
     private void Awake()
     {
         _navAgent = GetComponent<NavMeshAgent>();
 
         if (_preconditions != null)
         {
-            foreach (WorldState precondition in _preconditions)
+            foreach (State precondition in _preconditions)
                 _preconditionsDict.Add(precondition.Key, precondition.Value);
         }
         
         if (_effects != null)
         {
-            foreach (WorldState effect in _effects)
+            foreach (State effect in _effects)
                 _effectsDict.Add(effect.Key, effect.Value);
         }
     }

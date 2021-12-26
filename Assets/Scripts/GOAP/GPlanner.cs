@@ -10,11 +10,27 @@ public class Node
     private Dictionary<string, int> _states;
     private GAction _action;
 
-    public Node(Node parent, float cost, Dictionary<string, int> states, GAction action)
+    public Node(Node parent, float cost, Dictionary<string, int> worldStates, GAction action)
     {
         _parent = parent;
         _cost = cost;
-        _states = new Dictionary<string, int>(states);
+        _states = new Dictionary<string, int>(worldStates);
+        _action = action;
+    }
+    
+    public Node(Node parent, float cost, Dictionary<string, int> worldStates,
+        Dictionary<string, int> beliefStates, GAction action)
+    {
+        _parent = parent;
+        _cost = cost;
+        
+        _states = new Dictionary<string, int>(worldStates);
+        foreach (KeyValuePair<string, int> belief in beliefStates)
+        {
+            if (!_states.ContainsKey(belief.Key))
+                _states.Add(belief.Key, belief.Value);
+        }
+
         _action = action;
     }
 
@@ -26,7 +42,7 @@ public class Node
 
 public class GPlanner
 {
-    public Queue<GAction> Plan(List<GAction> actions, Dictionary<string, int> goals, WorldStateHandler worldStates)
+    public Queue<GAction> Plan(List<GAction> actions, Dictionary<string, int> goals, StateHandler beliefStates)
     {
         List<GAction> usableActions = new List<GAction>();
         foreach (GAction action in actions)
@@ -36,7 +52,8 @@ public class GPlanner
         }
 
         List<Node> leaves = new List<Node>();
-        Node start = new Node(null, 0, GWorld.Instance.WorldStateHandler.WorldStates, null);
+        Node start = new Node(null, 0, GWorld.Instance.StateHandler.States,
+            beliefStates.States, null);
 
         if (BuildGraph(start, leaves, usableActions, goals))
         {
@@ -69,6 +86,13 @@ public class GPlanner
         bool foundPath = false;
         foreach (GAction action in actions)
         {
+            string s = "";
+            foreach (KeyValuePair<string, int> pair in parent.States)
+            {
+                s += $"{pair.Key} : {pair.Value}\n";
+            }
+            Debug.Log(s);
+
             if (action.IsAchievableGiven(parent.States))
             {
                 Dictionary<string, int> currentStates = new Dictionary<string, int>(parent.States);

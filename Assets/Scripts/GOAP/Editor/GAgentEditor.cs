@@ -7,11 +7,6 @@ using System.Collections.Generic;
 [CanEditMultipleObjects]
 public class GAgentVisualEditor : Editor 
 {
-    void OnEnable()
-    {
-
-    }
-
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();

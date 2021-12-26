@@ -23,8 +23,11 @@ public class SubGoal
 public class GAgent : MonoBehaviour
 {
     private List<GAction> _actions = new List<GAction>();
-    protected Dictionary<SubGoal, int> _goals = new Dictionary<SubGoal, int>();
     private Queue<GAction> _actionQueue;
+    private GInventory _inventory = new GInventory();
+    
+    protected StateHandler _beliefs = new StateHandler();
+    protected Dictionary<SubGoal, int> _goals = new Dictionary<SubGoal, int>();
 
     private GPlanner _planner;
     private GAction _currentAction;
@@ -34,6 +37,10 @@ public class GAgent : MonoBehaviour
 
     public IReadOnlyList<GAction> Actions { get { return _actions; } }
 
+    public GInventory Inventory { get { return _inventory; } }
+
+    public StateHandler Beliefs { get { return _beliefs; } }
+
     public Dictionary<SubGoal, int> Goals { get { return _goals; } }
 
     public GAction CurrentAction { get { return _currentAction; } }
@@ -42,7 +49,11 @@ public class GAgent : MonoBehaviour
     {
         GAction[] actions = GetComponents<GAction>();
         foreach (GAction action in actions)
+        {
+            action.Inventory = _inventory;
+            action.Beliefs = _beliefs;
             _actions.Add(action);
+        }
     }
 
     private void LateUpdate()
@@ -62,7 +73,7 @@ public class GAgent : MonoBehaviour
 
                 foreach (KeyValuePair<SubGoal, int> subGoal in sortedGoals)
                 {
-                    _actionQueue = _planner.Plan(_actions, subGoal.Key.Goals, null);
+                    _actionQueue = _planner.Plan(_actions, subGoal.Key.Goals, _beliefs);
                     if (_actionQueue != null)
                     {
                         _currentGoal = subGoal.Key;

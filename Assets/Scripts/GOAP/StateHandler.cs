@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class WorldState
+public class State
 {
     [SerializeField] private string _key;
     [SerializeField] private int _value;
@@ -19,29 +19,29 @@ public class WorldState
     }
 }
 
-public class WorldStateHandler
+public class StateHandler
 {
-    private Dictionary<string, int> _worldStatesDict;
+    private Dictionary<string, int> _statesDict;
 
-    public WorldStateHandler()
+    public StateHandler()
     {
-        _worldStatesDict = new Dictionary<string, int>();
+        _statesDict = new Dictionary<string, int>();
     }
 
-    public Dictionary<string, int> WorldStates
+    public Dictionary<string, int> States
     {
-        get { return _worldStatesDict; }
+        get { return _statesDict; }
     }
 
     public bool HasState(string key)
     {
-        return _worldStatesDict.ContainsKey(key);
+        return _statesDict.ContainsKey(key);
     }
 
     public void AddState(string key, int value)
     {
         if (!HasState(key))
-            _worldStatesDict.Add(key, value);
+            _statesDict.Add(key, value);
         else
             Debug.LogWarning($"State 'Key:{key}' already exists.");
     }
@@ -49,7 +49,7 @@ public class WorldStateHandler
     public void RemoveState(string key)
     {
         if (HasState(key))
-            _worldStatesDict.Remove(key);
+            _statesDict.Remove(key);
         else
             Debug.LogWarning($"State 'Key:{key}' does not exist.");
     }
@@ -58,18 +58,26 @@ public class WorldStateHandler
     {
         if (HasState(key))
         {
-            _worldStatesDict[key] += value;
-            if (_worldStatesDict[key] <= 0) 
+            _statesDict[key] += value;
+            if (_statesDict[key] <= 0) 
                 RemoveState(key);
         }
         else
             Debug.LogWarning($"State 'Key:{key}' does not exist.");
     }
-    
+
+    public void AddOrModifyState(string key, int value)
+    {
+        if (GWorld.Instance.StateHandler.HasState(key))
+            GWorld.Instance.StateHandler.ModifyState(key, value);
+        else
+            GWorld.Instance.StateHandler.AddState(key, value);
+    }
+
     public void SetState(string key, int value)
     {
         if (HasState(key))
-            _worldStatesDict[key] = value;
+            _statesDict[key] = value;
         else
             Debug.LogWarning($"State 'Key:{key}' does not exist.");
     }

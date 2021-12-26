@@ -2,13 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoToPatient : GAction
+public class GoHome : GAction
 {
     public override bool PrePerform()
     {
-        _target = GWorld.Instance.RemoveGameObjectFromQueue("patient")?.transform;
-
-        return _target != null;
+        return true;
     }
 
     public override bool PostPerform()

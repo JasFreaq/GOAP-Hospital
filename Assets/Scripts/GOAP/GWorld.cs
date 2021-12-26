@@ -7,12 +7,12 @@ public sealed class GWorld
 {
     private static readonly GWorld _instance = new GWorld();
     
-    private WorldStateHandler _worldStateHandler;
+    private StateHandler _stateHandler;
     private Dictionary<string, Queue<GameObject>> _gameObjectQueues;
 
     private GWorld()
     {
-        _worldStateHandler = new WorldStateHandler();
+        _stateHandler = new StateHandler();
         _gameObjectQueues = new Dictionary<string, Queue<GameObject>>();
     }
 
@@ -21,9 +21,9 @@ public sealed class GWorld
         get { return _instance; }
     }
 
-    public WorldStateHandler WorldStateHandler
+    public StateHandler StateHandler
     {
-        get { return _worldStateHandler; }
+        get { return _stateHandler; }
     }
 
     public void AddGameObjectToQueue(string key, GameObject gameObject)

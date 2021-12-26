@@ -16,7 +16,7 @@ public class UpdateWorld : MonoBehaviour
     private void LateUpdate()
     {
         _statesText.text = "";
-        Dictionary<string, int> worldStates = GWorld.Instance.WorldStateHandler.WorldStates;
+        Dictionary<string, int> worldStates = GWorld.Instance.StateHandler.States;
         foreach (KeyValuePair<string, int> state in worldStates)
         {
             _statesText.text += $"{state.Key}, {state.Value}\n";
