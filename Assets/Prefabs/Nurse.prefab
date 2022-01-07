@@ -1024,6 +1024,8 @@ GameObject:
   - component: {fileID: 165921308}
   - component: {fileID: 3212058416165737817}
   - component: {fileID: 6955114422206734691}
+  - component: {fileID: 827034305506398433}
+  - component: {fileID: 4777785024777616829}
   m_Layer: 0
   m_Name: Nurse
   m_TagString: Untagged
@@ -1116,6 +1118,8 @@ MonoBehaviour:
   _effects:
   - _key: GotPatient
     _value: 1
+  - _key: FreeCubicle
+    _value: 1
 --- !u!114 &3212058416165737817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1130,7 +1134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _actionName: Treat Patient
   _cost: 1
-  _duration: 8
+  _duration: 12
   _targetTag: 
   _preconditions:
   - _key: GotPatient
@@ -1152,7 +1156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _actionName: Rest
   _cost: 1
-  _duration: 8
+  _duration: 15
   _targetTag: Lounge
   _preconditions:
   - _key: Exhausted
@@ -1160,6 +1164,49 @@ MonoBehaviour:
   _effects:
   - _key: Rested
     _value: 1
+--- !u!114 &827034305506398433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2618188073631541129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c40246391bad5b24cb8ed341c0ec36a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _actionName: Visit Toilet
+  _cost: 1
+  _duration: 2
+  _targetTag: 
+  _preconditions:
+  - _key: NeedRelief
+    _value: 1
+  - _key: FreeToilet
+    _value: 1
+  _effects:
+  - _key: Relieved
+    _value: 1
+--- !u!114 &4777785024777616829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2618188073631541129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7843f33605097b24b8708e655f53fb2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _state: NeedRelief
+  _stateStrength: 10
+  _stateDecayRate: 2
+  _queueName: puddle
+  _worldState: PuddlesLeft
+  _resourcePrefab: {fileID: 1625109968861542130, guid: 2f67e1b06640349c7a33a29963d525ff, type: 3}
+  _action: {fileID: 827034305506398433}
 --- !u!1 &2629889911763255196
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] private GameObject _spawnPrefab;
     [SerializeField] private int _spawnNum = 1;
     [SerializeField] private Vector2 _spawnIntervalRange = new Vector2(1f, 2f);
+    [SerializeField] private Transform _assignAsParent;
 
     private void Start()
     {
@@ -21,7 +22,10 @@ public class Spawner : MonoBehaviour
         while ((_spawnNum > 0 && _spawnedNum < _spawnNum) || 
                (_spawnNum == 0 && (_spawnIntervalRange.x >= 1f && _spawnIntervalRange.y >= 1f)))
         {
-            Instantiate(_spawnPrefab, transform.position, Quaternion.identity);
+            GameObject spawnInstance = Instantiate(_spawnPrefab, transform.position, Quaternion.identity);
+            if (_assignAsParent)
+                spawnInstance.transform.parent = _assignAsParent;
+
             _spawnedNum++;
 
             if (_spawnIntervalRange.x >= 1f && _spawnIntervalRange.y >= 1f)

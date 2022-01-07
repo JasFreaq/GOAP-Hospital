@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NurseAgent : GAgent
+public class DoctorAgent : GAgent
 {
     private void Start()
     {
-        SubGoal s1 = new SubGoal("TreatPatient", 1, false);
-        _goals.Add(s1, 3);
-        
-        SubGoal s2 = new SubGoal("Rested", 1, false);
-        _goals.Add(s2, 1);
+        SubGoal s1 = new SubGoal("Paperwork", 1, false);
+        _goals.Add(s1, 1);
 
+        SubGoal s2 = new SubGoal("Rested", 1, false);
+        _goals.Add(s2, 3);
+        
         SubGoal s3 = new SubGoal("Relieved", 1, false);
         _goals.Add(s3, 5);
 
@@ -28,7 +28,7 @@ public class NurseAgent : GAgent
             _beliefs.AddState("Exhausted", 0);
         }
     }
-
+    
     private IEnumerator FillBladderRoutine()
     {
         while (true)

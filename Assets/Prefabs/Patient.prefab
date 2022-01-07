@@ -2749,7 +2749,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _actionName: Go To Hospital
   _cost: 1
-  _duration: 0.5
+  _duration: 2
   _targetTag: Door
   _preconditions: []
   _effects:
@@ -2769,7 +2769,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _actionName: Go To Reception
   _cost: 1
-  _duration: 1
+  _duration: 6
   _targetTag: Reception
   _preconditions:
   - _key: HasArrived
@@ -2835,7 +2835,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _actionName: Get Treated
   _cost: 1
-  _duration: 5
+  _duration: 8
   _targetTag: 
   _preconditions:
   - _key: AtCubicle

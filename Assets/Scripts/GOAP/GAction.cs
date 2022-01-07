@@ -102,7 +102,7 @@ public abstract class GAction : MonoBehaviour
 
     public void TryStopRunning()
     {
-        if (_navAgent.hasPath && _navAgent.remainingDistance < 1f)
+        if (Vector3.Distance(_target.position, transform.position) < 2f) 
         {
             if (!_invokedComplete)
             {

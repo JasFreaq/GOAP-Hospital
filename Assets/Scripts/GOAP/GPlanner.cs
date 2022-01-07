@@ -86,13 +86,6 @@ public class GPlanner
         bool foundPath = false;
         foreach (GAction action in actions)
         {
-            string s = "";
-            foreach (KeyValuePair<string, int> pair in parent.States)
-            {
-                s += $"{pair.Key} : {pair.Value}\n";
-            }
-            Debug.Log(s);
-
             if (action.IsAchievableGiven(parent.States))
             {
                 Dictionary<string, int> currentStates = new Dictionary<string, int>(parent.States);

@@ -19,7 +19,8 @@ public class UpdateWorld : MonoBehaviour
         Dictionary<string, int> worldStates = GWorld.Instance.StateHandler.States;
         foreach (KeyValuePair<string, int> state in worldStates)
         {
-            _statesText.text += $"{state.Key}, {state.Value}\n";
+            if (state.Value > 0)
+                _statesText.text += $"{state.Key}, {state.Value}\n";
         }
     }
 }

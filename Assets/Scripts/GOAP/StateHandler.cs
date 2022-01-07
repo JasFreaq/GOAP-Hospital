@@ -57,11 +57,7 @@ public class StateHandler
     public void ModifyState(string key, int value)
     {
         if (HasState(key))
-        {
             _statesDict[key] += value;
-            if (_statesDict[key] <= 0) 
-                RemoveState(key);
-        }
         else
             Debug.LogWarning($"State 'Key:{key}' does not exist.");
     }
