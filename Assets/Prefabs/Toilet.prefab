@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5087096148366301041}
-  m_Layer: 0
+  - component: {fileID: 5801583986914158267}
+  m_Layer: 6
   m_Name: Toilet
-  m_TagString: Untagged
+  m_TagString: Toilet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35,6 +36,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5801583986914158267
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2995648429224225418}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5.35, y: 5.2, z: 5.5}
+  m_Center: {x: 2.65, y: 2.6, z: 0.75}
 --- !u!1 &4846602570752988564
 GameObject:
   m_ObjectHideFlags: 0
@@ -44,9 +58,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8424887141485665348}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Nav Center
-  m_TagString: Toilet
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -133,6 +147,10 @@ PrefabInstance:
       value: wall (1)
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 2ee752227db6945dfa3dc5ef19df5a75, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 2ee752227db6945dfa3dc5ef19df5a75, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
       objectReference: {fileID: 0}
@@ -209,6 +227,10 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: bdbd0277d93d148bc806581771e724f9, type: 3}
       propertyPath: m_Name
       value: wallDoorway
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: bdbd0277d93d148bc806581771e724f9, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: bdbd0277d93d148bc806581771e724f9, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -289,6 +311,10 @@ PrefabInstance:
       value: wall
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 2ee752227db6945dfa3dc5ef19df5a75, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 2ee752227db6945dfa3dc5ef19df5a75, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
       objectReference: {fileID: 0}
@@ -367,8 +393,16 @@ PrefabInstance:
       value: toilet
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: cb7ecc5bba2e14115aae89133f8c5ab2, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: cb7ecc5bba2e14115aae89133f8c5ab2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7334764585934320612, guid: cb7ecc5bba2e14115aae89133f8c5ab2, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7334764585934320612, guid: cb7ecc5bba2e14115aae89133f8c5ab2, type: 3}
       propertyPath: m_StaticEditorFlags

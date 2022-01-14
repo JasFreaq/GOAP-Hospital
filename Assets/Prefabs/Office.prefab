@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1902488482324367822}
   m_Layer: 0
   m_Name: Office
-  m_TagString: Untagged
+  m_TagString: Office
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 8367852624855859331}
   m_Layer: 0
   m_Name: Nav Center
-  m_TagString: Office
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

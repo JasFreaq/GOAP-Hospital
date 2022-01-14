@@ -6,7 +6,7 @@ public class VisitToilet : GAction
 {
     public override bool PrePerform()
     {
-        _target = GWorld.Instance.RemoveGameObjectFromQueue("toilet")?.transform;
+        _target = GWorld.Instance.GetAvailableGameObjectFromQueue("toilet")?.transform;
         if (_target == null)
             return false;
 

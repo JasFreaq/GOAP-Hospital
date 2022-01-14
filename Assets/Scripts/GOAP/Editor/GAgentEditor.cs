@@ -13,8 +13,10 @@ public class GAgentVisualEditor : Editor
         serializedObject.Update();
 
         GAgentVisual agentVis = (GAgentVisual) target;
+
         GUILayout.Label("Name: " + agentVis.name);
         GUILayout.Label("Current Action: " + agentVis.Agent.CurrentAction);
+
         GUILayout.Label("Actions: ");
         foreach (GAction action in agentVis.Agent.Actions)
         {
@@ -28,6 +30,7 @@ public class GAgentVisualEditor : Editor
 
             GUILayout.Label("====  " + action.ActionName + "(" + precondition + ")(" + effect + ")");
         }
+
         GUILayout.Label("Goals: ");
         foreach (KeyValuePair<SubGoal, int> goal in agentVis.Agent.Goals)
         {
@@ -35,6 +38,19 @@ public class GAgentVisualEditor : Editor
             foreach (KeyValuePair<string, int> subgoal in goal.Key.Goals)
                 GUILayout.Label("=====  " + subgoal.Key);
         }
+
+        GUILayout.Label("Beliefs: ");
+        foreach (KeyValuePair<string, int> sg in agentVis.Agent.Beliefs.States)
+        {
+            GUILayout.Label("=====  " + sg.Key);
+        }
+
+        GUILayout.Label("Inventory: ");
+        foreach (GameObject g in agentVis.Agent.Inventory.Items)
+        {
+            GUILayout.Label("====  " + g.tag);
+        }
+
         serializedObject.ApplyModifiedProperties();
     }
 }

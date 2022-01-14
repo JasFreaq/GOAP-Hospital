@@ -34,7 +34,18 @@ public sealed class GWorld
         _gameObjectQueues[key].Enqueue(gameObject);
     }
 
-    public GameObject RemoveGameObjectFromQueue(string key)
+    public GameObject GetAvailableGameObjectFromQueue(string key)
+    {
+        if (!_gameObjectQueues.ContainsKey(key))
+            return null;
+
+        if (_gameObjectQueues[key].Count == 0)
+            return null;
+        
+        return _gameObjectQueues[key].Dequeue();
+    }
+    
+    public GameObject RemoveGameObjectFromQueue(string key, GameObject gameObject)
     {
         if (!_gameObjectQueues.ContainsKey(key))
             return null;
@@ -42,6 +53,22 @@ public sealed class GWorld
         if (_gameObjectQueues[key].Count == 0)
             return null;
 
-        return _gameObjectQueues[key].Dequeue();
+        GameObject foundObject = null;
+        List<GameObject> objects = new List<GameObject>();
+        while (_gameObjectQueues[key].Count > 0)
+        {
+            GameObject currentObject = _gameObjectQueues[key].Dequeue();
+            if (currentObject.Equals(gameObject))
+                foundObject = currentObject;
+            else
+                objects.Add(currentObject);
+        }
+
+        foreach (GameObject currentObject in objects)
+        {
+            _gameObjectQueues[key].Enqueue(currentObject);
+        }
+
+        return foundObject;
     }
 }

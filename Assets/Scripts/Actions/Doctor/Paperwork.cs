@@ -6,7 +6,7 @@ public class Paperwork : GAction
 {
     public override bool PrePerform()
     {
-        _target = GWorld.Instance.RemoveGameObjectFromQueue("office")?.transform;
+        _target = GWorld.Instance.GetAvailableGameObjectFromQueue("office")?.transform;
         if (_target == null)
             return false;
 

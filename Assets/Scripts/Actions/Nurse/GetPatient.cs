@@ -8,11 +8,11 @@ public class GetPatient : GAction
 
     public override bool PrePerform()
     {
-        _target = GWorld.Instance.RemoveGameObjectFromQueue("patient")?.transform;
+        _target = GWorld.Instance.GetAvailableGameObjectFromQueue("patient")?.transform;
         if (_target == null)
             return false;
 
-        _resource = GWorld.Instance.RemoveGameObjectFromQueue("cubicle");
+        _resource = GWorld.Instance.GetAvailableGameObjectFromQueue("cubicle");
         if (_resource == null)
         {
             GWorld.Instance.AddGameObjectToQueue("patient", _target.gameObject);

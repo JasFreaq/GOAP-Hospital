@@ -6,7 +6,7 @@ public class Clean : GAction
 {
     public override bool PrePerform()
     {
-        _target = GWorld.Instance.RemoveGameObjectFromQueue("puddle")?.transform;
+        _target = GWorld.Instance.GetAvailableGameObjectFromQueue("puddle")?.transform;
 
         return _target != null;
     }
