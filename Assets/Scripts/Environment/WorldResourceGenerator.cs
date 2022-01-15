@@ -3,50 +3,68 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class WorldResourceGenerator : MonoBehaviour
 {
-    #region Associated Data Structures
-
-    [System.Serializable]
-    class Resource
-    {
-        public string worldState;
-        public string queueName;
-        public string objectTag;
-        public GameObject prefab;
-    }
-
-    #endregion
-
     [SerializeField] private NavMeshSurface _navSurface;
     [SerializeField] private Transform _resourceParent;
-    [SerializeField] private Resource _resource;
+    [SerializeField] private ResourceData[] _resources;
     [SerializeField] private string _alternateNavCenterName = "Nav Center";
+    [SerializeField] private Transform _resourceButtonsHolder;
+    [SerializeField] private ResourceButton _resourceButton;
 
     private Camera _mainCamera;
+    private ResourceButton[] _resourceButtons;
 
     private GameObject _focusedObj;
     private Vector3 _goalPos;
     private Vector3 _clickOffset;
+    private int _selectedIndex;
     private bool _offsetCalculated;
     private bool _resourceInstantiated;
 
     private void Start()
     {
         _mainCamera = Camera.main;
+
+        _resourceButtons = new ResourceButton[_resources.Length];
+        for (int i = 0; i < _resources.Length; i++)
+        {
+            ResourceButton resourceButton = Instantiate(_resourceButton, _resourceButtonsHolder);
+
+            int index = i;
+            resourceButton.Button.onClick.AddListener(() =>
+            {
+                _resourceButtons[_selectedIndex].Image.color = Color.white;
+                _selectedIndex = index;
+                resourceButton.Image.color = Color.green;
+            });
+            resourceButton.Text.text = _resources[i].ObjectTag;
+
+            _resourceButtons[i] = resourceButton;
+        }
+
+        _resourceButtons[0].Image.color = Color.green;
     }
 
     void Update()
+    {
+        ProcessInput();
+    }
+
+    private void ProcessInput()
     {
         if (Input.GetMouseButtonDown(0))
         {
             if (!_focusedObj)
             {
                 Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out RaycastHit hit))
+                if (!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out RaycastHit hit))
                 {
-                    if (hit.transform.CompareTag(_resource.objectTag))
+                    print(hit.transform);
+                    if (FindResourceTag(hit.transform))
                     {
                         _focusedObj = hit.transform.gameObject;
 
@@ -56,14 +74,14 @@ public class WorldResourceGenerator : MonoBehaviour
                     else
                     {
                         _goalPos = hit.point;
-                        _focusedObj = Instantiate(_resource.prefab, _goalPos, Quaternion.identity);
+                        _focusedObj = Instantiate(_resources[_selectedIndex].Prefab, _goalPos, Quaternion.identity);
                         _focusedObj.transform.parent = _resourceParent;
                         _resourceInstantiated = true;
                     }
                 }
             }
         }
-        
+
         if (Input.GetMouseButtonUp(0))
         {
             if (_focusedObj)
@@ -72,16 +90,16 @@ public class WorldResourceGenerator : MonoBehaviour
                 {
                     if (string.IsNullOrWhiteSpace(_alternateNavCenterName))
                     {
-                        GWorld.Instance.AddGameObjectToQueue(_resource.queueName, _focusedObj);
+                        GWorld.Instance.AddGameObjectToQueue(_resources[_selectedIndex].QueueName, _focusedObj);
                     }
                     else
                     {
                         Transform navCenter = _focusedObj.transform.Find("Nav Center");
-                        GWorld.Instance.AddGameObjectToQueue(_resource.queueName,
+                        GWorld.Instance.AddGameObjectToQueue(_resources[_selectedIndex].QueueName,
                             navCenter ? navCenter.gameObject : _focusedObj);
                     }
 
-                    GWorld.Instance.StateHandler.ModifyState(_resource.worldState, 1);
+                    GWorld.Instance.StateHandler.ModifyState(_resources[_selectedIndex].WorldState, 1);
 
                     _resourceInstantiated = false;
                 }
@@ -114,7 +132,7 @@ public class WorldResourceGenerator : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.LeftArrow))
                 _focusedObj.transform.Rotate(0, 90, 0);
-            
+
             if (Input.GetKeyDown(KeyCode.RightArrow))
                 _focusedObj.transform.Rotate(0, -90, 0);
 
@@ -122,18 +140,35 @@ public class WorldResourceGenerator : MonoBehaviour
             {
                 if (string.IsNullOrWhiteSpace(_alternateNavCenterName))
                 {
-                    GWorld.Instance.RemoveGameObjectFromQueue(_resource.queueName, _focusedObj);
+                    GWorld.Instance.RemoveGameObjectFromQueue(_resources[_selectedIndex].QueueName, _focusedObj);
                 }
                 else
                 {
                     Transform navCenter = _focusedObj.transform.Find("Nav Center");
-                    GWorld.Instance.RemoveGameObjectFromQueue(_resource.queueName,
+                    GWorld.Instance.RemoveGameObjectFromQueue(_resources[_selectedIndex].QueueName,
                         navCenter ? navCenter.gameObject : _focusedObj);
                 }
 
-                GWorld.Instance.StateHandler.ModifyState(_resource.worldState, -1);
+                GWorld.Instance.StateHandler.ModifyState(_resources[_selectedIndex].WorldState, -1);
                 Destroy(_focusedObj);
             }
         }
+    }
+
+    private bool FindResourceTag(Transform comparer)
+    {
+        int i = 0;
+        foreach (ResourceData resource in _resources)
+        {
+            if (comparer.CompareTag(resource.ObjectTag))
+            {
+                _selectedIndex = i;
+                return true;
+            }
+
+            i++;
+        }
+
+        return false;
     }
 }
